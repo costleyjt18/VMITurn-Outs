@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
@@ -31,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     JSONObject jsonObject;
     JSONArray jsonArray;
     MqttHelper mqttHelper;
-    TextView dataReceived;
 
     @Override
 
@@ -43,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         listItems = new ArrayList<>();
-
-        dataReceived = (TextView) findViewById(R.id.dataReceived);
 
         startMqtt();
     }
@@ -73,11 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("Debug", mqttMessage.toString());
                 json_string = mqttMessage.toString();
 
-                List_Item item = new List_Item(topic,mqttMessage.toString());
-                listItems.add(item);
-                adapter = new MyAdapter(listItems, getApplicationContext());
-                recyclerView.setAdapter(adapter);
-                /*try {
+                try {
                     jsonObject = new JSONObject(json_string);
                     jsonArray = jsonObject.getJSONArray("turnouts");
 
@@ -94,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }*/
+                }
 
             }
 
